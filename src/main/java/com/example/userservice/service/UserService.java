@@ -6,7 +6,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    public UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public int getAmountOfMessages(Long userId) {
         return userRepository.findById(userId)
