@@ -3,6 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 application-dev.properties
+mysql
 
 ### STS ###
 .apt_generated
