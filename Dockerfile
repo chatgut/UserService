@@ -1,7 +1,7 @@
 FROM eclipse-temurin:20-jre-alpine
 
-COPY target/UserService-0.0.1-SNAPSHOT.jar 0.0.1-SNAPSHOT.jar
+COPY target/*.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]

@@ -4,7 +4,6 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
     container_name: user-service
     ports:
       - "8080:8080"
@@ -14,13 +13,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/userService
       MYSQL_USER: developer
       MYSQL_PASSWORD: password
+
   db:
-    #restart: on-failure
     image: mysql:latest
     environment:
       MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_USER: root
-      #MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: userService
       MYSQL_PASSWORD: password
@@ -29,7 +27,6 @@ services:
       - "3306:3306"
     volumes:
       - db_mysql:/var/lib/mysql
+
 volumes:
   db_mysql:
-
- # todo:
