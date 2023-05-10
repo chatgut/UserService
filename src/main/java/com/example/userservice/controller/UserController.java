@@ -2,7 +2,6 @@ package com.example.userservice.controller;
 
 import com.example.userservice.service.UserService;
 import com.example.userservice.userDTO.UserDTO;
-import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +32,6 @@ public class UserController {
 
     @GetMapping("/profile")
     public UserDTO getUserProfile(@RequestHeader("userID") Long userID) {
-        System.out.println(userID);
         return userService.getUserProfile(userID);
     }
 
@@ -42,5 +40,10 @@ public class UserController {
     public void addUserProfile(@RequestBody UserDTO userDTO, @RequestHeader("userID") Long userID) {
         userService.createUser(userDTO, userID);
     }
-    
+
+    @PutMapping("/update")
+    public void updateUserProfile(@RequestBody UserDTO userDTO, @RequestHeader("userID") Long userID) {
+        userService.updateUserProfile(userDTO, userID);
+    }
+
 }

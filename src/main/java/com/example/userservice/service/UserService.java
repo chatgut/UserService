@@ -3,18 +3,15 @@ package com.example.userservice.service;
 import com.example.userservice.entity.UserEntity;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.userDTO.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 
 @Service
 public class UserService {
 
-    @Autowired
+
     public UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -55,12 +52,24 @@ public class UserService {
     public void createUser(UserDTO userDTO, Long userID) {
         UserEntity user = new UserEntity();
         try {
-            user.setName(userDTO.getName());
-            user.setImageLink(userDTO.getImageLink());
+            user.setName(userDTO.name());
+            user.setImageLink(userDTO.imageLink());
             user.setUserID(userID);
             userRepository.save(user);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists or invalid input");
+        }
+    }
+
+    public void updateUserProfile(UserDTO userDTO, Long userID) {
+        try {
+            UserEntity user = userRepository.findByUserID(userID);
+            user.setName(userDTO.name());
+            user.setImageLink(userDTO.imageLink());
+            userRepository.save(user);
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
     }
 }
