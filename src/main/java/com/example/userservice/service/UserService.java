@@ -54,9 +54,13 @@ public class UserService {
 
     public void createUser(UserDTO userDTO, Long userID) {
         UserEntity user = new UserEntity();
-        user.setName(userDTO.getName());
-        user.setImageLink(userDTO.getImageLink());
-        user.setUserID(userID);
-        userRepository.save(user);
+        try {
+            user.setName(userDTO.getName());
+            user.setImageLink(userDTO.getImageLink());
+            user.setUserID(userID);
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists or invalid input");
+        }
     }
 }

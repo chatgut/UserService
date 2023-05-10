@@ -42,6 +42,5 @@ public class UserController {
     public void addUserProfile(@RequestBody UserDTO userDTO, @RequestHeader("userID") Long userID) {
         userService.createUser(userDTO, userID);
     }
-
-    // ta emot HEADER ID och lägg till information utefter det
+    
 }
