@@ -51,4 +51,12 @@ public class UserService {
         System.out.println(userID);
         return userRepository.findByUserID(userID);
     }
+
+    public void createUser(UserDTO userDTO, Long userID) {
+        UserEntity user = new UserEntity();
+        user.setName(userDTO.getName());
+        user.setImageLink(userDTO.getImageLink());
+        user.setUserID(userID);
+        userRepository.save(user);
+    }
 }

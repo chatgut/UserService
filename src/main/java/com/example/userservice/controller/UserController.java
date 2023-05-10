@@ -2,6 +2,8 @@ package com.example.userservice.controller;
 
 import com.example.userservice.service.UserService;
 import com.example.userservice.userDTO.UserDTO;
+import jakarta.annotation.Nullable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,4 +37,11 @@ public class UserController {
         return userService.getUserProfile(userID);
     }
 
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addUserProfile(@RequestBody UserDTO userDTO, @RequestHeader("userID") Long userID) {
+        userService.createUser(userDTO, userID);
+    }
+
+    // ta emot HEADER ID och lägg till information utefter det
 }
