@@ -1,13 +1,20 @@
 package com.example.userservice.service;
 
+import com.example.userservice.entity.UserEntity;
 import com.example.userservice.repository.UserRepository;
+import com.example.userservice.userDTO.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
+
 @Service
 public class UserService {
 
+    @Autowired
     public UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -30,5 +37,18 @@ public class UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"))
                 .getImageLink();
+    }
+
+    public UserDTO getUserProfile(Long userID) {
+        UserEntity user = getUserByHeader(userID);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        return new UserDTO(user.getName(), user.getImageLink());
+    }
+
+    private UserEntity getUserByHeader(Long userID) {
+        System.out.println(userID);
+        return userRepository.findByUserID(userID);
     }
 }
