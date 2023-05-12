@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build with Maven
-      run: mvn package
+      run: mvn clean package
     - name: Login to GitHub Packages
       uses: docker/login-action@v1
       with:
