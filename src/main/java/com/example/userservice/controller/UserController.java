@@ -16,10 +16,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/{userId}")
+    public UserDTO getUserProfileById(@PathVariable("userId") Long id) {
+       return userService.getUserProfileById(id);
+    }
 
-    @GetMapping("/profile")
-    public UserDTO getUserProfile(@RequestHeader("userID") String userID) {
-        return userService.getUserProfile(userID);
+    @GetMapping
+    public UserDTO getOwnUserProfile(@RequestHeader("userID") String userID) {
+        return userService.getOwnUserProfile(userID);
     }
 
     @PostMapping()
@@ -28,7 +32,7 @@ public class UserController {
         userService.createUser(userDTO, userID);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public void updateUserProfile(@RequestBody UserDTO userDTO, @RequestHeader("userID") String userID) {
         userService.updateUserProfile(userDTO, userID);
     }

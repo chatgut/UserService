@@ -6,11 +6,11 @@ import com.example.userservice.userDTO.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import java.util.Optional;
 
 
 @Service
 public class UserService {
-
 
     public UserRepository userRepository;
 
@@ -19,7 +19,7 @@ public class UserService {
     }
 
 
-    public UserDTO getUserProfile(String userID) {
+    public UserDTO getOwnUserProfile(String userID) {
         UserEntity user = getUserByHeader(userID);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
@@ -30,6 +30,14 @@ public class UserService {
     private UserEntity getUserByHeader(String userID) {
         System.out.println(userID);
         return userRepository.findByUserID(userID);
+    }
+
+    public UserDTO getUserProfileById(Long id) {
+        Optional<UserEntity> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        return new UserDTO(user.get().getName(), user.get().getImageLink());
     }
 
     public void createUser(UserDTO userDTO, String userID) {
