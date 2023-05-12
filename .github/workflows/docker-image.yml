@@ -26,7 +26,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/chatgut/userservice/userservice:1.0
+        tags: ghcr.io/chatgut/userservice:1.0
       env:
         DOCKER_BUILDKIT: 1
         DOCKER_USERNAME: ${{ github.repository_owner }}
