@@ -22,7 +22,7 @@ public class UserEntity {
     private int amountOfMessages;
 
     @Column(unique = true)
-    private Long userID;
+    private String userID;
 
 
     @Override

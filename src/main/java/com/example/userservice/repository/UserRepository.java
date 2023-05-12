@@ -7,5 +7,5 @@ import org.springframework.data.repository.ListCrudRepository;
 public interface UserRepository extends ListCrudRepository<UserEntity, Long> {
 
     @Query("SELECT u FROM UserEntity u WHERE u.userID = :userID")
-    UserEntity findByUserID(Long userID);
+    UserEntity findByUserID(String userID);
 }

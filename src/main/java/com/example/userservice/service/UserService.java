@@ -18,25 +18,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public int getAmountOfMessages(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"))
-                .getAmountOfMessages();
-    }
 
-    public String getName(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"))
-                .getName();
-    }
-
-    public String getImageLink(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"))
-                .getImageLink();
-    }
-
-    public UserDTO getUserProfile(Long userID) {
+    public UserDTO getUserProfile(String userID) {
         UserEntity user = getUserByHeader(userID);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
@@ -44,12 +27,12 @@ public class UserService {
         return new UserDTO(user.getName(), user.getImageLink());
     }
 
-    private UserEntity getUserByHeader(Long userID) {
+    private UserEntity getUserByHeader(String userID) {
         System.out.println(userID);
         return userRepository.findByUserID(userID);
     }
 
-    public void createUser(UserDTO userDTO, Long userID) {
+    public void createUser(UserDTO userDTO, String userID) {
         UserEntity user = new UserEntity();
         try {
             user.setName(userDTO.name());
@@ -61,9 +44,13 @@ public class UserService {
         }
     }
 
-    public void updateUserProfile(UserDTO userDTO, Long userID) {
+    public void updateUserProfile(UserDTO userDTO, String userID) {
+
         try {
             UserEntity user = userRepository.findByUserID(userID);
+            if (!user.getUserID().equals(userID)) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User ID does not match");
+            }
             user.setName(userDTO.name());
             user.setImageLink(userDTO.imageLink());
             userRepository.save(user);
