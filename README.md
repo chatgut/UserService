@@ -17,6 +17,8 @@ ___
  * `GET /users/{userId}` - Get user profile by ID. <br /><br />
   
  * `GET /users` - Get user's own profile by HEADER userID  <br /><br />
+
+ * `GET /users/all` - Get all users profiles <br /><br />
    
  * `POST /users` - Create a new user profile by HEADER userID
    * Example:
