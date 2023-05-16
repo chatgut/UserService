@@ -3,9 +3,12 @@ package com.example.userservice.service;
 import com.example.userservice.entity.UserEntity;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.userDTO.UserDTO;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +16,27 @@ import java.util.List;
 @Service
 public class UserService {
 
-    public UserRepository userRepository;
+    public static UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+        UserService.userRepository = userRepository;
+    }
+
+
+    // TODO: Fix issue so that the amount of messages is updated and saved correctly
+    @RabbitListener(queues = "messages")
+    public void incrementMessageCount(@RequestHeader String userID) {
+        UserEntity user = userRepository.findByUserID(userID);
+        if (user != null) {
+            Integer amountOfMessages = userRepository.getAmountOfMessages(userID);
+            if (amountOfMessages != null) {
+                int newAmount = amountOfMessages + 1;
+                user.setAmountOfMessages(newAmount);
+                userRepository.save(user);
+            }
+        }
+
+
     }
 
 

@@ -19,7 +19,7 @@ public class UserEntity {
 
     private String imageLink;
 
-    private int amountOfMessages;
+    private Integer amountOfMessages;
 
     @Column(unique = true)
     private String userID;
