@@ -1,15 +1,26 @@
 # UserService
 
-### This microservice application offers the following features:
-* Create a new user profile
-* Update user's own profile
+#### This service runs on ``port 8002`` with a MYSQL database on ``port 3306``.
+
+-----------------
+### This service is responsible for the user profile management:
+* Create new user profile
 * Get user's own profile
 * Get user profile by ID
+* Get all users profiles
+* Update user's own profile
+
+
 
 ### The user profile contains the following information:
 - Image link
 - Name
 - Amount of posts
+
+## How to run
+___
+Clone the repository and run the following command:
+```docker compose up```
 
 
 ## Endpoints
