@@ -18,15 +18,15 @@ jobs:
     - name: Login to GitHub Packages
       uses: docker/login-action@v1
       with:
-        registry: docker.pkg.github.com
-        username: ${{ github.repository_owner }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and Push Docker image
       uses: docker/build-push-action@v3
       with:
         context: .
         push: true
-        tags: ghcr.io/chatgut/userservice:${{ github.ref }}
+        tags: ghcr.io/chatgut/userservice:1.0
       env:
         DOCKER_BUILDKIT: 1
         DOCKER_USERNAME: ${{ github.repository_owner }}
