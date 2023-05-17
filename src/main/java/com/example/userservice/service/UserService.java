@@ -6,7 +6,6 @@ import com.example.userservice.userDTO.UserDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -23,9 +22,8 @@ public class UserService {
     }
 
 
-    // TODO: Fix issue so that the amount of messages is updated and saved correctly
     @RabbitListener(queues = "messages")
-    public void incrementMessageCount(@RequestHeader String userID) {
+    public void incrementMessageCount(String userID) {
         UserEntity user = userRepository.findByUserID(userID);
         if (user != null) {
             Integer amountOfMessages = userRepository.getAmountOfMessages(userID);
@@ -35,8 +33,6 @@ public class UserService {
                 userRepository.save(user);
             }
         }
-
-
     }
 
 
@@ -96,9 +92,6 @@ public class UserService {
         for (UserEntity userEntity : userEntities) {
             usersAsDTO.add(new UserDTO(userEntity.getName(), userEntity.getImageLink(), userEntity.getUserID()));
         }
-
         return usersAsDTO;
-
-
     }
 }

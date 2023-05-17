@@ -40,4 +40,6 @@ public class UserController {
         userService.createUser(userDTO, userID);
     }
 
+    // TODO: add endpoint for GET method to users based on a list of UserIDs
+
 }
