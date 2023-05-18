@@ -1,9 +1,11 @@
-package rabbitmq;
+package com.example.userservice.rabbitmq;
 
 import com.example.userservice.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 
@@ -14,6 +16,11 @@ public class RabbitMQListener {
 
     public RabbitMQListener(UserService userService) {
         this.userService = userService;
+    }
+
+    @Bean
+    public Queue myQueue(){
+        return new Queue("messages", false);
     }
 
     @RabbitListener(queues = "messages")
@@ -30,6 +37,4 @@ public class RabbitMQListener {
             System.out.println("Error in RabbitMQListener: " + e.getMessage());
         }
     }
-
-    // TODO: fix issue so it establish a connection to QueueRabbitMQ
 }

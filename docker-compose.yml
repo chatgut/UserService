@@ -10,9 +10,9 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/userService
-      MYSQL_USER: developer
-      MYSQL_PASSWORD: password
+      DB_URL: jdbc:mysql://db:3306/userService
+      DB_USER: developer
+      DB_PASSWORD: password
 
   db:
     image: mysql:latest
